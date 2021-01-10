@@ -297,7 +297,7 @@ function noWrap({
 			'-webkit-box-orient': 'vertical',
 			'-webkit-line-clamp': `${maxLines}`,
 			'line-height'       : lineHeightEm && `${lineHeightEm}em`,
-			'max-height'        : `${maxLines * lineHeightEm}em`,
+			'max-height'        : lineHeightEm && `${maxLines * lineHeightEm}em`,
 		})
 	}
 
