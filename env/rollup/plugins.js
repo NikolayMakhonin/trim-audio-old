@@ -28,7 +28,7 @@ const mode = process.env.NODE_ENV
 
 const plugins = {
 	svelte  : svelte.rollup,
-	postCss : postcss.rollup.sapper,
+	postCss : postcss.rollup,
 	babel   : babel.rollup,
 	istanbul: (options = {}) => istanbul({
 		...nycrc,
@@ -162,7 +162,7 @@ module.exports = {
 			}),
 			// plugins.replace(),
 			plugins.json(),
-			plugins.postCss(),
+			plugins.postCss.common(),
 			plugins.alias(),
 			plugins.resolve({
 				browser: true,
@@ -200,7 +200,7 @@ module.exports = {
 				'process.browser': true,
 			}),
 			plugins.json(),
-			plugins.postCss({
+			plugins.postCss.sapper({
 				extract: 'styles.css',
 			}),
 			plugins.svelte.client(),
