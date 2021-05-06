@@ -23,11 +23,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d52e1996-07d3-4492-b0b2-6fba29f4b076" name="Default Changelist" comment="All tests OK">
-      <change beforePath="$PROJECT_DIR$/.eslintignore" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintignore" afterDir="false" />
+    <list default="true" id="d52e1996-07d3-4492-b0b2-6fba29f4b076" name="Default Changelist" comment="Update dependencies. All tests OK.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/env/rollup/svelte.js" beforeDir="false" afterPath="$PROJECT_DIR$/env/rollup/svelte.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/common/notifications/NotificationWindow.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/notifications/NotificationWindow.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -264,14 +263,7 @@
       <workItem from="1610529959471" duration="1277000" />
       <workItem from="1610779024857" duration="14000" />
       <workItem from="1613030739107" duration="1827000" />
-      <workItem from="1620277466677" duration="3172000" />
-    </task>
-    <task id="LOCAL-00032" summary="Fix resolveExternal">
-      <created>1590942567339</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1590942567339</updated>
+      <workItem from="1620277466677" duration="4822000" />
     </task>
     <task id="LOCAL-00033" summary="Merged with app2">
       <created>1593263199226</created>
@@ -609,7 +601,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620277935412</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="Update dependencies. All tests OK.">
+      <created>1620280936744</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1620280936744</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -645,7 +644,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Merged with app2" />
     <MESSAGE value="Fix lint" />
     <MESSAGE value="Rollback postcss-nested to v4.2.1 due to: https://github.com/egoist/rollup-plugin-postcss/issues/205" />
     <MESSAGE value="Fix travis" />
@@ -670,7 +668,8 @@
     <MESSAGE value="replace new URL() to url-join" />
     <MESSAGE value="Small changes" />
     <MESSAGE value="All tests OK" />
-    <option name="LAST_COMMIT_MESSAGE" value="All tests OK" />
+    <MESSAGE value="Update dependencies. All tests OK." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update dependencies. All tests OK." />
     <option name="PRESELECT_EXISTING_CHANGELIST" value="true" />
   </component>
   <component name="WindowStateProjectService">
@@ -678,30 +677,30 @@
       <screen x="0" y="0" width="1920" height="882" />
     </state>
     <state x="409" y="84" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.882@0.0.1920.882" timestamp="1620278222484" />
-    <state x="0" y="0" width="1919" height="882" key="CommitChangelistDialog2" timestamp="1620280023148">
+    <state x="0" y="0" width="1919" height="882" key="CommitChangelistDialog2" timestamp="1620281787457">
       <screen x="0" y="0" width="1920" height="882" />
     </state>
-    <state x="0" y="0" width="1919" height="882" key="CommitChangelistDialog2/0.0.1920.882@0.0.1920.882" timestamp="1620280023148" />
-    <state x="0" y="0" width="1920" height="882" key="DiffContextDialog" timestamp="1620280021235">
+    <state x="0" y="0" width="1919" height="882" key="CommitChangelistDialog2/0.0.1920.882@0.0.1920.882" timestamp="1620281787457" />
+    <state x="0" y="0" width="1920" height="882" key="DiffContextDialog" timestamp="1620281786156">
       <screen x="0" y="0" width="1920" height="882" />
     </state>
-    <state x="0" y="0" width="1920" height="882" key="DiffContextDialog/0.0.1920.882@0.0.1920.882" timestamp="1620280021235" />
-    <state width="1892" height="241" key="GridCell.Tab.0.bottom" timestamp="1620280501315">
+    <state x="0" y="0" width="1920" height="882" key="DiffContextDialog/0.0.1920.882@0.0.1920.882" timestamp="1620281786156" />
+    <state width="1892" height="290" key="GridCell.Tab.0.bottom" timestamp="1620281972153">
       <screen x="0" y="0" width="1920" height="882" />
     </state>
-    <state width="1892" height="241" key="GridCell.Tab.0.bottom/0.0.1920.882@0.0.1920.882" timestamp="1620280501315" />
-    <state width="1892" height="241" key="GridCell.Tab.0.center" timestamp="1620280501315">
+    <state width="1892" height="290" key="GridCell.Tab.0.bottom/0.0.1920.882@0.0.1920.882" timestamp="1620281972153" />
+    <state width="1892" height="290" key="GridCell.Tab.0.center" timestamp="1620281972152">
       <screen x="0" y="0" width="1920" height="882" />
     </state>
-    <state width="1892" height="241" key="GridCell.Tab.0.center/0.0.1920.882@0.0.1920.882" timestamp="1620280501315" />
-    <state width="1892" height="241" key="GridCell.Tab.0.left" timestamp="1620280501314">
+    <state width="1892" height="290" key="GridCell.Tab.0.center/0.0.1920.882@0.0.1920.882" timestamp="1620281972152" />
+    <state width="1892" height="290" key="GridCell.Tab.0.left" timestamp="1620281972152">
       <screen x="0" y="0" width="1920" height="882" />
     </state>
-    <state width="1892" height="241" key="GridCell.Tab.0.left/0.0.1920.882@0.0.1920.882" timestamp="1620280501314" />
-    <state width="1892" height="241" key="GridCell.Tab.0.right" timestamp="1620280501315">
+    <state width="1892" height="290" key="GridCell.Tab.0.left/0.0.1920.882@0.0.1920.882" timestamp="1620281972152" />
+    <state width="1892" height="290" key="GridCell.Tab.0.right" timestamp="1620281972152">
       <screen x="0" y="0" width="1920" height="882" />
     </state>
-    <state width="1892" height="241" key="GridCell.Tab.0.right/0.0.1920.882@0.0.1920.882" timestamp="1620280501315" />
+    <state width="1892" height="290" key="GridCell.Tab.0.right/0.0.1920.882@0.0.1920.882" timestamp="1620281972152" />
     <state width="1892" height="241" key="GridCell.Tab.1.bottom" timestamp="1620280501315">
       <screen x="0" y="0" width="1920" height="882" />
     </state>
@@ -775,12 +774,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/node_modules/sapper/dist/create_manifest_data.js</url>
-          <line>3850</line>
+          <line>410</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/node_modules/sapper/dist/create_manifest_data.js</url>
-          <line>4429</line>
+          <line>808</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
