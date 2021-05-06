@@ -24,8 +24,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d52e1996-07d3-4492-b0b2-6fba29f4b076" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/env/deploy/php/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/env/deploy/php/.htaccess" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/env/deploy/php/upload.php" beforeDir="false" afterPath="$PROJECT_DIR$/env/deploy/php/upload.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +74,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="auto.test.manager.delay" value="1000" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.17.0" />
@@ -106,7 +106,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="plint" />
-    <property name="settings.editor.selected.configurable" value="terminal" />
+    <property name="settings.editor.selected.configurable" value="settings.javascript.linters.eslint" />
     <property name="ts.external.directory.path" value="L:\Work\_GIT\GitHub\NodeJs\templates\app-template\node_modules\typescript\lib" />
   </component>
   <component name="RecentsManager">
@@ -192,6 +192,7 @@
       <item itemvalue="npm.Build Pack All" />
       <item itemvalue="npm.Test Pack All" />
       <item itemvalue="npm.Pack All" />
+      <item itemvalue="npm.Build Libs" />
       <item itemvalue="npm.Build Pack Demo" />
       <item itemvalue="npm.Build Dev" />
       <item itemvalue="npm.Test Dev" />
@@ -206,7 +207,6 @@
       <item itemvalue="npm.Build Pack Prod" />
       <item itemvalue="npm.Build Pack Stage" />
       <item itemvalue="npm.Lint" />
-      <item itemvalue="npm.Build Libs" />
     </list>
   </component>
   <component name="SvnConfiguration">
@@ -257,6 +257,10 @@
       <workItem from="1607593295023" duration="1284000" />
       <workItem from="1608968092728" duration="19000" />
       <workItem from="1609644906030" duration="1549000" />
+      <workItem from="1610529959471" duration="1277000" />
+      <workItem from="1610779024857" duration="14000" />
+      <workItem from="1613030739107" duration="1827000" />
+      <workItem from="1620277466677" duration="306000" />
     </task>
     <task id="LOCAL-00031" summary="Fix resolveExternal">
       <created>1590942171314</created>
@@ -666,26 +670,10 @@
     <option name="PRESELECT_EXISTING_CHANGELIST" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="614" y="103" key="#ESLint" timestamp="1601730229636">
-      <screen x="0" y="0" width="1920" height="882" />
-    </state>
-    <state x="614" y="103" key="#ESLint/0.0.1920.882@0.0.1920.882" timestamp="1601730229636" />
-    <state x="586" y="113" key="#Inspections" timestamp="1601729904444">
-      <screen x="0" y="0" width="1920" height="882" />
-    </state>
-    <state x="586" y="113" key="#Inspections/0.0.1920.882@0.0.1920.882" timestamp="1601729904444" />
     <state x="409" y="84" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606991438006">
       <screen x="0" y="0" width="1920" height="882" />
     </state>
     <state x="409" y="84" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.882@0.0.1920.882" timestamp="1606991438006" />
-    <state x="422" y="154" key="#org.intellij.plugins.intelliLang.inject.config.ui.BaseInjectionDialog" timestamp="1601711815579">
-      <screen x="0" y="0" width="1920" height="882" />
-    </state>
-    <state x="422" y="154" key="#org.intellij.plugins.intelliLang.inject.config.ui.BaseInjectionDialog/0.0.1920.882@0.0.1920.882" timestamp="1601711815579" />
-    <state x="651" y="253" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1601730650956">
-      <screen x="0" y="0" width="1920" height="882" />
-    </state>
-    <state x="651" y="253" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.882@0.0.1920.882" timestamp="1601730650956" />
     <state x="0" y="0" width="1919" height="882" key="CommitChangelistDialog2" timestamp="1609646411275">
       <screen x="0" y="0" width="1920" height="882" />
     </state>
@@ -774,10 +762,10 @@
       <screen x="0" y="0" width="1920" height="882" />
     </state>
     <state x="666" y="68" key="RollbackChangesDialog/0.0.1920.882@0.0.1920.882" timestamp="1606987704016" />
-    <state x="343" y="0" key="SettingsEditor" timestamp="1606998985219">
+    <state x="343" y="0" key="SettingsEditor" timestamp="1610779037188">
       <screen x="0" y="0" width="1920" height="882" />
     </state>
-    <state x="343" y="0" key="SettingsEditor/0.0.1920.882@0.0.1920.882" timestamp="1606998985219" />
+    <state x="343" y="0" key="SettingsEditor/0.0.1920.882@0.0.1920.882" timestamp="1610779037188" />
     <state x="451" y="106" key="Vcs.Push.Dialog.v2" timestamp="1607001085266">
       <screen x="0" y="0" width="1920" height="882" />
     </state>
@@ -798,10 +786,6 @@
       <screen x="0" y="0" width="1920" height="882" />
     </state>
     <state x="43" y="43" width="1793" height="805" key="scopes/0.0.1920.882@0.0.1920.882" timestamp="1606461475596" />
-    <state x="633" y="128" key="vcs.ApplyPatchDifferentiatedDialog" timestamp="1601795878169">
-      <screen x="0" y="0" width="1920" height="882" />
-    </state>
-    <state x="633" y="128" key="vcs.ApplyPatchDifferentiatedDialog/0.0.1920.882@0.0.1920.882" timestamp="1601795878169" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
