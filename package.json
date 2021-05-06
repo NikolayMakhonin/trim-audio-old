@@ -25,7 +25,7 @@
 	"scripts": {
 		"precommit": "npm run build-test:ci",
 		"prepublishOnly": "echo DONT PUBLISH IT !!!&&exit 1",
-		"ci": "npm run build-test:ci && ncat \"tmp/*/coverage/all/lcov/**/lcov.info\" --banner \"\" | coveralls",
+		"ci": "npm run build-test:ci && concat \"tmp/*/coverage/all/lcov/**/lcov.info\" -s \"\\r\\n\" | coveralls",
 		"lint": "run-script \"require('./env/scripts/common').lint().stopOnError()\"",
 		"lint:fix": "run-script \"require('./env/scripts/common').lint({fix: true}).stopOnError()\"",
 		"-------- build --------": "",
@@ -166,7 +166,6 @@
 		"kleur": "^4.1.4",
 		"lodash": "^4.17.21",
 		"mocha": "^8.3.2",
-		"ncat": "^4.0.2",
 		"nyc": "^15.1.0",
 		"perfectionist": "^2.4.0",
 		"postcss": "^7.0.35",
@@ -202,7 +201,7 @@
 		"zip-dir": "^2.0.0"
 	},
 	"dependencies": {
-		"@flemist/web-logger": "^0.1.15",
+		"@flemist/web-logger": "^0.1.17",
 		"compression": "^1.7.4",
 		"express": "^4.17.1",
 		"iterare": "^1.2.1",
