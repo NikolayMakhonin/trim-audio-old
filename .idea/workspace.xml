@@ -23,10 +23,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d52e1996-07d3-4492-b0b2-6fba29f4b076" name="Default Changelist" comment="Update dependencies completed. All tests OK.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-    </list>
+    <list default="true" id="d52e1996-07d3-4492-b0b2-6fba29f4b076" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -262,14 +259,7 @@
       <workItem from="1610529959471" duration="1277000" />
       <workItem from="1610779024857" duration="14000" />
       <workItem from="1613030739107" duration="1827000" />
-      <workItem from="1620277466677" duration="9057000" />
-    </task>
-    <task id="LOCAL-00035" summary="Fix lint">
-      <created>1599248159616</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1599248159616</updated>
+      <workItem from="1620277466677" duration="9674000" />
     </task>
     <task id="LOCAL-00036" summary="Rollback postcss-nested to v4.2.1 due to: https://github.com/egoist/rollup-plugin-postcss/issues/205">
       <created>1599280225124</created>
@@ -607,7 +597,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620283862790</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="Update dependencies completed. All tests OK.">
+      <created>1620293322378</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1620293322378</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -676,14 +673,14 @@
       <screen x="0" y="0" width="1920" height="882" />
     </state>
     <state x="409" y="84" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.882@0.0.1920.882" timestamp="1620278222484" />
-    <state x="0" y="0" width="1919" height="882" key="CommitChangelistDialog2" timestamp="1620286183958">
+    <state x="0" y="0" width="1919" height="882" key="CommitChangelistDialog2" timestamp="1620293321603">
       <screen x="0" y="0" width="1920" height="882" />
     </state>
-    <state x="0" y="0" width="1919" height="882" key="CommitChangelistDialog2/0.0.1920.882@0.0.1920.882" timestamp="1620286183958" />
-    <state x="0" y="0" width="1920" height="882" key="DiffContextDialog" timestamp="1620283664021">
+    <state x="0" y="0" width="1919" height="882" key="CommitChangelistDialog2/0.0.1920.882@0.0.1920.882" timestamp="1620293321603" />
+    <state x="0" y="0" width="1920" height="882" key="DiffContextDialog" timestamp="1620293314905">
       <screen x="0" y="0" width="1920" height="882" />
     </state>
-    <state x="0" y="0" width="1920" height="882" key="DiffContextDialog/0.0.1920.882@0.0.1920.882" timestamp="1620283664021" />
+    <state x="0" y="0" width="1920" height="882" key="DiffContextDialog/0.0.1920.882@0.0.1920.882" timestamp="1620293314905" />
     <state width="1892" height="274" key="GridCell.Tab.0.bottom" timestamp="1620286111676">
       <screen x="0" y="0" width="1920" height="882" />
     </state>
