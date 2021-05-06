@@ -60,7 +60,6 @@ function rollupCommon(options = {}) {
 
 	return svelte({
 		// preserveComments: true,
-		dev       : true,
 		// see: https://github.com/Rich-Harris/svelte-preprocessor-demo
 		preprocess: {
 			...preprocess,
@@ -126,6 +125,10 @@ function rollupCommon(options = {}) {
 			return onwarn(warning)
 		},
 		...options,
+		compilerOptions: {
+			dev: true,
+			...options.compilerOptions,
+		},
 	})
 }
 
@@ -133,15 +136,19 @@ module.exports = {
 	rollup: {
 		common: rollupCommon,
 		client: (options = {}) => rollupCommon({
-			hydratable: true,
-			emitCss   : false,
-			babelrc   : babelConfigMinimal,
+			compilerOptions: {
+				hydratable: true,
+			},
+			emitCss: false,
+			babelrc: babelConfigMinimal,
 			...options,
 		}),
 		server: (options = {}) => rollupCommon({
-			emitCss : true,
-			generate: 'ssr',
-			babelrc : babelConfigMinimal,
+			compilerOptions: {
+				generate: 'ssr',
+			},
+			emitCss: true,
+			babelrc: babelConfigMinimal,
 			...options,
 		}),
 	},
