@@ -165,7 +165,7 @@
 		"karma-safaritechpreview-launcher": "^2.0.2",
 		"kleur": "^4.1.4",
 		"lodash": "^4.17.21",
-		"mocha": "^8.2.1",
+		"mocha": "^8.3.2",
 		"ncat": "^4.0.2",
 		"nyc": "^15.1.0",
 		"perfectionist": "^2.4.0",
@@ -202,10 +202,9 @@
 		"zip-dir": "^2.0.0"
 	},
 	"dependencies": {
-		"@flemist/web-logger": "0.1.5",
+		"@flemist/web-logger": "^0.1.15",
 		"compression": "^1.7.4",
 		"express": "^4.17.1",
-		"html-escaper": "^2.0.2",
 		"iterare": "^1.2.1",
 		"mime": "^2.5.2",
 		"needle": "^2.6.0",
