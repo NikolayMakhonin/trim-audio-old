@@ -11,7 +11,7 @@ jobs:
 #      node_js: "10.16.3"
 #      env: CXX=clang
     - os: osx
-      node_js: "12.4.0"
+      node_js: "12.17.0"
       env: CXX=clang
 #    - os: linux
 #      dist: precise

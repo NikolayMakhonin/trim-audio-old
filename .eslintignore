@@ -11,3 +11,4 @@ docs/**/*
 browser/**/*
 node/**/*
 env/logger/server/**/*
+*.md
