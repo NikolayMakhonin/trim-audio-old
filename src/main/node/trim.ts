@@ -2,12 +2,7 @@ import globby from 'globby'
 import fse from 'fs-extra'
 import path from 'path'
 import prism from 'prism-media'
-// import { Lame } from 'node-lame'
 import lamejs from 'lamejs'
-import ogg from '@suldashi/ogg'
-import opus from 'node-opus'
-import { OpusEncoder } from '@discordjs/opus'
-import OpusScript from 'opusscript'
 
 // // from https://gist.github.com/smashah/fb7bd9a57dd2181d4142886888f99b92
 //
@@ -108,7 +103,7 @@ import OpusScript from 'opusscript'
 //     return all
 // }
 
-const SILENCE_LEVEL_DEFAULT = 0.00003
+const SILENCE_LEVEL_DEFAULT = 0.1
 
 export function streamToBuffer(stream: NodeJS.ReadableStream): Promise<Buffer> {
     return new Promise((resolve, reject) => {
@@ -125,6 +120,116 @@ export function streamToBuffer(stream: NodeJS.ReadableStream): Promise<Buffer> {
     })
 }
 
+export async function readOggFile(filePath): Promise<Int16Array> {
+    const stream = fse.createReadStream(filePath)
+        .pipe(new prism.opus.OggDemuxer())
+        .pipe(new prism.opus.Decoder({ rate: 16000, channels: 1, frameSize: 960 }))
+
+    const buffer = await streamToBuffer(stream)
+
+    return new Int16Array(buffer.buffer)
+}
+
+export function saveToMp3File(filePath, samples: Int16Array) {
+    const mp3Encoder = new lamejs.Mp3Encoder(1, 16000, 128)
+    const mp3Buffer1 = Buffer.from(mp3Encoder.encodeBuffer(samples))
+    const mp3Buffer2 = Buffer.from(mp3Encoder.flush())
+    const mp3Buffer = Buffer.concat([mp3Buffer1, mp3Buffer2])
+
+    return fse.writeFile(filePath, mp3Buffer)
+}
+
+export function normalize(samples: Int16Array, coef: number) {
+    let max = 0
+    let min = 1 << 15
+    for (let i = 0, len = samples.length; i < len; i++) {
+        const value = samples[i]
+        if (value > max) {
+            max = value
+        }
+        if (value < min) {
+            min = value
+        }
+    }
+
+    const offset = -(max + min) / 2
+    const mult = coef * (1 << 15) / (max + offset)
+    for (let i = 0, len = samples.length; i < len; i++) {
+        samples[i] = (samples[i] + offset) * mult
+    }
+}
+
+export function trimSamples({
+    samples,
+    silenceLevel,
+    minSilenceSamples,
+}: {
+    samples: Int16Array,
+    silenceLevel: number,
+    minSilenceSamples: number,
+}) {
+    const silenceLevelInt16 = silenceLevel * (1 << 15)
+    const minDispersion = silenceLevelInt16 * silenceLevelInt16
+    let len = samples.length
+
+    function searchContent(backward: boolean) {
+        let sum = 0
+        let sumSqr = 0
+
+        for (let i = 0; i < len; i++) {
+            const value = samples[
+                backward
+                    ? len - i - 1
+                    : i
+            ]
+
+            sum += value
+            sumSqr += value * value
+            if (i >= minSilenceSamples) {
+                const prevValue = samples[i - minSilenceSamples]
+                sum -= prevValue
+                sumSqr -= prevValue * prevValue
+
+                const avg = sum / minSilenceSamples
+                const sqrAvg = sumSqr / minSilenceSamples
+                const dispersion = sqrAvg - avg * avg
+
+                if (dispersion > minDispersion) {
+                    return backward
+                        ? len - (i - minSilenceSamples) - 1
+                        : i - minSilenceSamples
+                }
+            }
+        }
+
+        return null
+    }
+
+    const from = searchContent(false)
+    if (from == null) {
+        throw new Error('Audio is empty')
+    }
+
+    const to = searchContent(true)
+
+    samples = samples.slice(from || 0, to || len)
+    len = samples.length
+
+    // Amplify
+    if (from != null) {
+        for (let i = 0; i < minSilenceSamples; i++) {
+            samples[i] *= (i / minSilenceSamples)
+        }
+    }
+    if (to != null) {
+        for (let i = 0; i < minSilenceSamples; i++) {
+            samples[len - i - 1] *= (i / minSilenceSamples)
+        }
+    }
+
+    return samples
+}
+
 export async function trimAudioFile({
     inputFilePath,
     outputFilePath,
@@ -137,6 +242,8 @@ export async function trimAudioFile({
     inputFilePath = path.resolve(inputFilePath)
     outputFilePath = path.resolve(outputFilePath)
 
+    let samples = await readOggFile(inputFilePath)
+
     const dir = path.dirname(outputFilePath)
     if (!fse.existsSync(dir)) {
         await fse.mkdirp(dir)
@@ -145,60 +252,14 @@ export async function trimAudioFile({
         await fse.unlink(outputFilePath)
     }
 
-    // const encoder = new OpusEncoder(16000, 1)
-    // const encoder = new OpusScript(16000, 1, OpusScript.Application.AUDIO)
-    // const buffer = encoder.decode(opusBuffer)
+    normalize(samples, 0.95)
+    samples = await trimSamples({
+        samples,
+        silenceLevel,
+        minSilenceSamples: Math.round(40 / 1000 * 16000), // 40 ms
+    })
 
-    // const buffer = await new Promise<Buffer>((resolve, reject) => {
-    //     const bufs = []
-    //     const decoder = new ogg.Decoder()
-    //     decoder.on('stream', stream => {
-    //         console.log('new "stream":', stream.serialno)
-    //
-    //         // emitted for each `ogg_packet` instance in the stream.
-    //         stream.on('data', packet => {
-    //             console.log('got "packet":', packet.packetno)
-    //             // bufs.push(packet._packet)
-    //             bufs.push(encoder.decode(packet))
-    //         })
-    //
-    //         stream.on('error', reject)
-    //
-    //         // emitted after the last packet of the stream
-    //         stream.on('end', () => {
-    //             console.log('got "end":', stream.serialno)
-    //             resolve(Buffer.concat(bufs))
-    //         })
-    //     })
-    //
-    //     fse.createReadStream(inputFilePath)
-    //         .pipe(decoder)
-    //         .on('error', reject)
-    // })
-
-    const stream = fse.createReadStream(inputFilePath)
-        .pipe(new prism.opus.OggDemuxer())
-        .pipe(new prism.opus.Decoder({ rate: 16000, channels: 1, frameSize: 960 }))
-        // .pipe(new prism.opus.Encoder({ rate: 16000, channels: 2, frameSize: 960 }))
-        // .pipe(fse.createWriteStream(outputFilePath))
-
-
-    const buffer = await streamToBuffer(stream)
-    // const opusBuffer = await fse.readFile(inputFilePath)
-
-    const samples = new Int16Array(buffer.buffer)
-    // const samples = new Int16Array(16000)
-    // for (let i = 0; i < 16000; i++) {
-    //     samples[i] = Math.round(Math.sin(i / 10) * 10000)
-    // }
-    // const b = Buffer.from(samples)
-
-    const mp3Encoder = new lamejs.Mp3Encoder(1, 16000, 128)
-    const mp3Buffer1 = mp3Encoder.encodeBuffer(samples)
-    const mp3Buffer2 = mp3Encoder.flush()
-    const mp3Buffer = Buffer.concat([mp3Buffer1, mp3Buffer2].map(o => Buffer.from(o)))
-
-    await fse.writeFile(outputFilePath, mp3Buffer)
+    await saveToMp3File(outputFilePath, samples)
 
     // await new Lame({
     //     output : outputFilePath,
