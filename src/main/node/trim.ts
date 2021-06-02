@@ -163,6 +163,27 @@ export async function trimAudioFile({
     await saveToMp3File(outputFilePath, samples)
 }
 
+export function trimAudioFilesFromDir({
+    inputDir,
+    inputFilesRelativeGlobs,
+    outputDir,
+    silenceLevel = SILENCE_LEVEL_DEFAULT,
+}: {
+    inputDir: string,
+    inputFilesRelativeGlobs: string[],
+    outputDir: string,
+    silenceLevel?: number,
+}) {
+    return trimAudioFiles({
+        inputFilesGlobs: inputFilesRelativeGlobs.map(o => path.resolve(inputDir, o)),
+        getOutputFilePath(filePath) {
+            return path.resolve(outputDir, path.relative(inputDir, filePath))
+                .replace(/\.\w+$/, '') + '.mp3'
+        },
+        silenceLevel,
+    })
+}
+
 export async function trimAudioFiles({
     inputFilesGlobs,
     getOutputFilePath,
@@ -170,9 +191,9 @@ export async function trimAudioFiles({
 }: {
     inputFilesGlobs: string[],
     getOutputFilePath: (inputFilePath: string) => string,
-    silenceLevel: number,
+    silenceLevel?: number,
 }) {
-    const inputFilesPaths = await globby(inputFilesGlobs)
+    const inputFilesPaths = await globby(inputFilesGlobs.map(o => o.replace(/\\/g, '/')))
 
     await Promise.all(inputFilesPaths.map(async (inputFilePath) => {
         const outputFilePath = getOutputFilePath(inputFilePath)
