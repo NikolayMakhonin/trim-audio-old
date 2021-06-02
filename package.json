@@ -128,6 +128,8 @@
 		"@suldashi/ogg": "^1.2.9",
 		"ffmpeg-static": "^4.3.0",
 		"lamejs": "^1.2.0",
+		"node-opus": "^0.3.3",
+		"opusscript": "0.0.8",
 		"prism-media": "^1.2.9"
 	}
 }

@@ -5,6 +5,9 @@ import prism from 'prism-media'
 // import { Lame } from 'node-lame'
 import lamejs from 'lamejs'
 import ogg from '@suldashi/ogg'
+import opus from 'node-opus'
+import { OpusEncoder } from '@discordjs/opus'
+import OpusScript from 'opusscript'
 
 // // from https://gist.github.com/smashah/fb7bd9a57dd2181d4142886888f99b92
 //
@@ -142,6 +145,10 @@ export async function trimAudioFile({
         await fse.unlink(outputFilePath)
     }
 
+    // const encoder = new OpusEncoder(16000, 1)
+    const encoder = new OpusScript(16000, 1, OpusScript.Application.AUDIO)
+    // const buffer = encoder.decode(opusBuffer)
+
     const buffer = await new Promise<Buffer>((resolve, reject) => {
         const bufs = []
         const decoder = new ogg.Decoder()
@@ -151,7 +158,7 @@ export async function trimAudioFile({
             // emitted for each `ogg_packet` instance in the stream.
             stream.on('data', packet => {
                 console.log('got "packet":', packet.packetno)
-                bufs.push(packet._packet)
+                bufs.push(encoder.decode(packet))
             })
 
             stream.on('error', reject)
@@ -175,14 +182,16 @@ export async function trimAudioFile({
 
 
     // const buffer = await streamToBuffer(stream)
+    // const opusBuffer = await fse.readFile(inputFilePath)
+
     const samples = new Int16Array(buffer)
 
-    const mp3Encoder = new lamejs.Mp3Encoder(1, 48000, 128)
+    const mp3Encoder = new lamejs.Mp3Encoder(1, 16000, 128)
     const mp3Buffer1 = Buffer.from(mp3Encoder.encodeBuffer(samples))
     const mp3Buffer2 = Buffer.from(mp3Encoder.flush())
     const mp3Buffer = Buffer.concat([mp3Buffer1, mp3Buffer2])
 
-    await fse.writeFile(outputFilePath, mp3Buffer)
+    await fse.writeFile(outputFilePath, buffer)
 
     // await new Lame({
     //     output : outputFilePath,
