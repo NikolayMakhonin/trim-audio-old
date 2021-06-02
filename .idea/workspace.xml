@@ -172,6 +172,7 @@
       <item itemvalue="npm.Build Libs" />
       <item itemvalue="npm.Test All" />
       <item itemvalue="npm.Build Test All" />
+      <item itemvalue="npm.Build Test Pack Dev" />
       <item itemvalue="npm.Build Dev" />
       <item itemvalue="npm.Test Dev" />
       <item itemvalue="npm.Build Test Dev" />

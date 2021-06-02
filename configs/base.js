@@ -1,7 +1,7 @@
 /* eslint-disable no-process-env */
 module.exports = {
-	packageName: 'app-template',
-	description: 'App Template',
+	packageName: 'trim-audio',
+	description: 'Trim silence from ogg and save result to mp3',
 	tests      : {
 
 	},
