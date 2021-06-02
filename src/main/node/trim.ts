@@ -4,7 +4,8 @@ import path from 'path'
 import prism from 'prism-media'
 import lamejs from 'lamejs'
 
-const SILENCE_LEVEL_DEFAULT = 0.1
+const SILENCE_LEVEL_START_DEFAULT = -1.1
+const SILENCE_LEVEL_END_DEFAULT = -3
 
 export function streamToBuffer(stream: NodeJS.ReadableStream): Promise<Buffer> {
     return new Promise((resolve, reject) => {
@@ -41,9 +42,11 @@ export function saveToMp3File(filePath, samples: Int16Array) {
 }
 
 export function normalize(samples: Int16Array, coef: number) {
+    const len = samples.length
     let max = 0
     let min = 1 << 15
-    for (let i = 0, len = samples.length; i < len; i++) {
+    let sum = 0
+    for (let i = 0; i < len; i++) {
         const value = samples[i]
         if (value > max) {
             max = value
@@ -51,27 +54,36 @@ export function normalize(samples: Int16Array, coef: number) {
         if (value < min) {
             min = value
         }
+        sum += value
     }
 
-    const offset = -(max + min) / 2
-    const mult = coef * (1 << 15) / (max + offset)
-    for (let i = 0, len = samples.length; i < len; i++) {
+    const avg = sum / len
+    const offset = -avg
+    const mult = coef * (1 << 15) / Math.max(max + offset, -(min + offset))
+    for (let i = 0; i < len; i++) {
         samples[i] = (samples[i] + offset) * mult
     }
 }
 
 export function trimSamples({
     samples,
-    silenceLevel,
+    silenceLevelStart,
+    silenceLevelEnd,
     minSilenceSamples,
 }: {
     samples: Int16Array,
-    silenceLevel: number,
+    silenceLevelStart: number,
+    silenceLevelEnd: number,
     minSilenceSamples: number,
 }) {
-    const silenceLevelInt16 = silenceLevel * (1 << 15)
-    const minDispersion = silenceLevelInt16 * silenceLevelInt16
     let len = samples.length
+    const minDispersionStart = calcMinDispersion(silenceLevelStart)
+    const minDispersionEnd = calcMinDispersion(silenceLevelEnd)
+
+    function calcMinDispersion(silenceLevel: number) {
+        const silenceLevelInt16 = (10 ** silenceLevel) * (1 << 15)
+        return silenceLevelInt16 * silenceLevelInt16
+    }
 
     function searchContent(backward: boolean) {
         let sum = 0
@@ -87,7 +99,11 @@ export function trimSamples({
             sum += value
             sumSqr += value * value
             if (i >= minSilenceSamples) {
-                const prevValue = samples[i - minSilenceSamples]
+                const prevValue = samples[
+                    backward
+                        ? len - (i - minSilenceSamples) - 1
+                        : i - minSilenceSamples
+                ]
                 sum -= prevValue
                 sumSqr -= prevValue * prevValue
 
@@ -95,7 +111,7 @@ export function trimSamples({
                 const sqrAvg = sumSqr / minSilenceSamples
                 const dispersion = sqrAvg - avg * avg
 
-                if (dispersion > minDispersion) {
+                if (dispersion > (backward ? minDispersionEnd : minDispersionStart)) {
                     return backward
                         ? len - (i - minSilenceSamples) - 1
                         : i - minSilenceSamples
@@ -134,11 +150,13 @@ export function trimSamples({
 export async function trimAudioFile({
     inputFilePath,
     outputFilePath,
-    silenceLevel = SILENCE_LEVEL_DEFAULT,
+    silenceLevelStart = SILENCE_LEVEL_START_DEFAULT,
+    silenceLevelEnd = SILENCE_LEVEL_END_DEFAULT,
 }: {
     inputFilePath: string,
     outputFilePath: string,
-    silenceLevel?: number,
+    silenceLevelStart?: number,
+    silenceLevelEnd?: number,
 }) {
     inputFilePath = path.resolve(inputFilePath)
     outputFilePath = path.resolve(outputFilePath)
@@ -156,7 +174,8 @@ export async function trimAudioFile({
     normalize(samples, 0.95)
     samples = await trimSamples({
         samples,
-        silenceLevel,
+        silenceLevelStart,
+        silenceLevelEnd,
         minSilenceSamples: Math.round(40 / 1000 * 16000), // 40 ms
     })
 
@@ -167,12 +186,14 @@ export function trimAudioFilesFromDir({
     inputDir,
     inputFilesRelativeGlobs,
     outputDir,
-    silenceLevel = SILENCE_LEVEL_DEFAULT,
+    silenceLevelStart = SILENCE_LEVEL_START_DEFAULT,
+    silenceLevelEnd = SILENCE_LEVEL_END_DEFAULT,
 }: {
     inputDir: string,
     inputFilesRelativeGlobs: string[],
     outputDir: string,
-    silenceLevel?: number,
+    silenceLevelStart?: number,
+    silenceLevelEnd?: number,
 }) {
     return trimAudioFiles({
         inputFilesGlobs: inputFilesRelativeGlobs.map(o => path.resolve(inputDir, o)),
@@ -180,18 +201,21 @@ export function trimAudioFilesFromDir({
             return path.resolve(outputDir, path.relative(inputDir, filePath))
                 .replace(/\.\w+$/, '') + '.mp3'
         },
-        silenceLevel,
+        silenceLevelStart,
+        silenceLevelEnd,
     })
 }
 
 export async function trimAudioFiles({
     inputFilesGlobs,
     getOutputFilePath,
-    silenceLevel = SILENCE_LEVEL_DEFAULT,
+    silenceLevelStart = SILENCE_LEVEL_START_DEFAULT,
+    silenceLevelEnd = SILENCE_LEVEL_END_DEFAULT,
 }: {
     inputFilesGlobs: string[],
     getOutputFilePath: (inputFilePath: string) => string,
-    silenceLevel?: number,
+    silenceLevelStart?: number,
+    silenceLevelEnd?: number,
 }) {
     const inputFilesPaths = await globby(inputFilesGlobs.map(o => o.replace(/\\/g, '/')))
 
@@ -206,7 +230,8 @@ export async function trimAudioFiles({
             await trimAudioFile({
                 inputFilePath,
                 outputFilePath,
-                silenceLevel,
+                silenceLevelStart,
+                silenceLevelEnd,
             })
             console.log('OK: ' + outputFilePath)
         } catch (err) {
