@@ -1,5 +1,5 @@
 {
-	"name": "trim-audio",
+	"name": "@flemist/trim-audio",
 	"version": "0.0.1",
 	"description": "Trim silence from ogg and save result to mp3",
 	"author": {

@@ -79,10 +79,10 @@ npx degit NikolayMakhonin/trim-audio#node-module <app name> && cd <app name> && 
 [npm-url]: https://npmjs.org/package/trim-audio
 [node-version-image]: https://img.shields.io/node/v/trim-audio.svg
 [node-version-url]: https://nodejs.org/en/download/
-[travis-image]: https://travis-ci.org/NikolayMakhonin/trim-audio.svg?branch=node-module
-[travis-url]: https://travis-ci.org/NikolayMakhonin/trim-audio?branch=node-module
-[coveralls-image]: https://coveralls.io/repos/github/NikolayMakhonin/trim-audio/badge.svg?branch=node-module
-[coveralls-url]: https://coveralls.io/github/NikolayMakhonin/trim-audio?branch=node-module
+[travis-image]: https://travis-ci.org/NikolayMakhonin/trim-audio.svg
+[travis-url]: https://travis-ci.org/NikolayMakhonin/trim-audio
+[coveralls-image]: https://coveralls.io/repos/github/NikolayMakhonin/trim-audio/badge.svg
+[coveralls-url]: https://coveralls.io/github/NikolayMakhonin/trim-audio
 [downloads-image]: https://img.shields.io/npm/dm/trim-audio.svg
 [downloads-url]: https://npmjs.org/package/trim-audio
 [npm-url]: https://npmjs.org/package/trim-audio
