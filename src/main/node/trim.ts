@@ -146,52 +146,59 @@ export async function trimAudioFile({
     }
 
     // const encoder = new OpusEncoder(16000, 1)
-    const encoder = new OpusScript(16000, 1, OpusScript.Application.AUDIO)
+    // const encoder = new OpusScript(16000, 1, OpusScript.Application.AUDIO)
     // const buffer = encoder.decode(opusBuffer)
 
-    const buffer = await new Promise<Buffer>((resolve, reject) => {
-        const bufs = []
-        const decoder = new ogg.Decoder()
-        decoder.on('stream', stream => {
-            console.log('new "stream":', stream.serialno)
+    // const buffer = await new Promise<Buffer>((resolve, reject) => {
+    //     const bufs = []
+    //     const decoder = new ogg.Decoder()
+    //     decoder.on('stream', stream => {
+    //         console.log('new "stream":', stream.serialno)
+    //
+    //         // emitted for each `ogg_packet` instance in the stream.
+    //         stream.on('data', packet => {
+    //             console.log('got "packet":', packet.packetno)
+    //             // bufs.push(packet._packet)
+    //             bufs.push(encoder.decode(packet))
+    //         })
+    //
+    //         stream.on('error', reject)
+    //
+    //         // emitted after the last packet of the stream
+    //         stream.on('end', () => {
+    //             console.log('got "end":', stream.serialno)
+    //             resolve(Buffer.concat(bufs))
+    //         })
+    //     })
+    //
+    //     fse.createReadStream(inputFilePath)
+    //         .pipe(decoder)
+    //         .on('error', reject)
+    // })
 
-            // emitted for each `ogg_packet` instance in the stream.
-            stream.on('data', packet => {
-                console.log('got "packet":', packet.packetno)
-                bufs.push(encoder.decode(packet))
-            })
-
-            stream.on('error', reject)
-
-            // emitted after the last packet of the stream
-            stream.on('end', () => {
-                console.log('got "end":', stream.serialno)
-                resolve(Buffer.concat(bufs))
-            })
-        })
-
-        fse.createReadStream(inputFilePath)
-            .pipe(decoder)
-            .on('error', reject)
-    })
-
-        // .pipe(new prism.opus.OggDemuxer())
-        // .pipe(new prism.opus.Decoder({ rate: 16000, channels: 2, frameSize: 960 }))
+    const stream = fse.createReadStream(inputFilePath)
+        .pipe(new prism.opus.OggDemuxer())
+        .pipe(new prism.opus.Decoder({ rate: 16000, channels: 1, frameSize: 960 }))
         // .pipe(new prism.opus.Encoder({ rate: 16000, channels: 2, frameSize: 960 }))
         // .pipe(fse.createWriteStream(outputFilePath))
 
 
-    // const buffer = await streamToBuffer(stream)
+    const buffer = await streamToBuffer(stream)
     // const opusBuffer = await fse.readFile(inputFilePath)
 
-    const samples = new Int16Array(buffer)
+    const samples = new Int16Array(buffer.buffer)
+    // const samples = new Int16Array(16000)
+    // for (let i = 0; i < 16000; i++) {
+    //     samples[i] = Math.round(Math.sin(i / 10) * 10000)
+    // }
+    // const b = Buffer.from(samples)
 
     const mp3Encoder = new lamejs.Mp3Encoder(1, 16000, 128)
-    const mp3Buffer1 = Buffer.from(mp3Encoder.encodeBuffer(samples))
-    const mp3Buffer2 = Buffer.from(mp3Encoder.flush())
-    const mp3Buffer = Buffer.concat([mp3Buffer1, mp3Buffer2])
+    const mp3Buffer1 = mp3Encoder.encodeBuffer(samples)
+    const mp3Buffer2 = mp3Encoder.flush()
+    const mp3Buffer = Buffer.concat([mp3Buffer1, mp3Buffer2].map(o => Buffer.from(o)))
 
-    await fse.writeFile(outputFilePath, buffer)
+    await fse.writeFile(outputFilePath, mp3Buffer)
 
     // await new Lame({
     //     output : outputFilePath,
