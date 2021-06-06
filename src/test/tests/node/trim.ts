@@ -14,7 +14,7 @@ describe('node > trim', function () {
 
 	it('bulk', async function () {
 		await trimAudioFilesFromDir({
-			inputDir               : 'l:/Work/_GIT/GitHub/NodeJs/apps/counter-sapper/static/client/speech/ogg',
+			inputDir               : 'l:/Work/_GIT/GitHub/NodeJs/apps/counter-sapper/docs/materials/speech/ogg',
 			inputFilesRelativeGlobs: ['**/*.ogg'],
 			outputDir              : 'l:/Work/_GIT/GitHub/NodeJs/apps/counter-sapper/static/client/speech/mp3',
 		})
