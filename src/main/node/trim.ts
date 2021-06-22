@@ -4,7 +4,7 @@ import path from 'path'
 import prism from 'prism-media'
 import lamejs from 'lamejs'
 
-const SILENCE_LEVEL_START_DEFAULT = -1.1
+const SILENCE_LEVEL_START_DEFAULT = -1.1 // use -1.5 for 'ф..'
 const SILENCE_LEVEL_END_DEFAULT = -3
 
 export function streamToBuffer(stream: NodeJS.ReadableStream): Promise<Buffer> {
